@@ -5,66 +5,16 @@
 //  Created by Silence on 2020/11/9.
 //  Copyright © 2020 Silence. All rights reserved.
 //
+// FOLIO 변경: 저장(save) 헬퍼 전체를 제거했다.
+//
+// 원본은 `AssetSaveUtil` 을 통해 시스템 앨범에 쓰는 API 를 함께 제공했다.
+// FOLIO 가 HX 에서 가져오는 것은 **Live Photo / AVAsset 요청 계층**뿐이고
+// (쓰기는 PhotoSwipe fork 가 담당한다), 저장 헬퍼는 `AssetSaveUtil` ·
+// `PhotoTools` · 리소스 번들까지 끌고 온다.
+//
+// 원본: https://github.com/SilenceLove/HXPhotoPicker  (MIT)
 
 import UIKit
 import Photos
 
-public struct AssetManager {
-    
-    /// 保存资源到系统相册
-    /// - Parameters:
-    ///   - type: 保存类型
-    ///   - albumType: 需要保存到自定义相册的类型
-    ///   - creationDate: 创建时间，默认当前时间
-    ///   - location: 位置信息
-    @available(iOS 13.0.0, *)
-    @discardableResult
-    public static func save(
-        type: AssetSaveUtil.SaveType,
-        customAlbumName: String? = nil,
-        creationDate: Date = .init(),
-        location: CLLocation? = nil
-    ) async throws -> PHAsset {
-        let albumType: AssetSaveUtil.AlbumType
-        if let customAlbumName {
-            albumType = .custom(customAlbumName)
-        }else {
-            albumType = .displayName
-        }
-        return try await AssetSaveUtil.save(
-            type: type,
-            albumType: albumType,
-            creationDate: creationDate,
-            location: location
-        )
-    }
-    
-    /// 保存资源到系统相册
-    /// - Parameters:
-    ///   - type: 保存类型
-    ///   - albumType: 需要保存到自定义相册的类型
-    ///   - creationDate: 创建时间，默认当前时间
-    ///   - location: 位置信息
-    ///   - completion: 保存之后的结果
-    public static func save(
-        type: AssetSaveUtil.SaveType,
-        customAlbumName: String? = nil,
-        creationDate: Date = .init(),
-        location: CLLocation? = nil,
-        completion: @escaping (Result<PHAsset, AssetSaveUtil.SaveError>) -> Void
-    ) {
-        let albumType: AssetSaveUtil.AlbumType
-        if let customAlbumName {
-            albumType = .custom(customAlbumName)
-        }else {
-            albumType = .displayName
-        }
-        AssetSaveUtil.save(
-            type: type,
-            albumType: albumType,
-            creationDate: creationDate,
-            location: location,
-            completion: completion
-        )
-    }
-}
+public struct AssetManager {}
